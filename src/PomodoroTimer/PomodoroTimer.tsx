@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { styles } from './PomodoroTimerStyle'
 import { BUTTON_STATUS, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant'
+import PomodoroLengthMenu from '../PomodoroLengthMenu/PomodoroLengthMenu';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 import { Box, Button, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import PomodoroLengthMenu from '../PomodoroLengthMenu/PomodoroLengthMenu';
 
 const PomodoroTimer = () => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);

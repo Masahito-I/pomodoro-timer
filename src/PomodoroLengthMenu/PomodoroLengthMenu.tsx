@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 const PomodoroLengthMenu = (props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { setSelectedPomodoroLength } = props
+  const { setSelectedPomodoroLength } = props;
   
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,7 +41,7 @@ const PomodoroLengthMenu = (props: Props) => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Pomodoro Length
+        {'Pomodoro Length'}
       </Button>
       <Menu
         id="demo-positioned-menu"
