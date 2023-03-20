@@ -3,12 +3,16 @@ export const styles = {
     mt: 2, 
     color: '#ccc',
   },
+  titleBox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    mt:2,
+    mb: 5,
+  },
   circleOutsideBox: {
     position: 'relative',
     display: 'inline-flex',
-  },
-  title: {
-    mb: 5,
   },
   circleInsideBox: {
     top: 0,

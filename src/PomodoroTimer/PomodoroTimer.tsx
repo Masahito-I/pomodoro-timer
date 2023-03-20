@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { styles } from './PomodoroTimerStyle'
-import { BUTTON_STATUS } from '../Utils/Constant'
+import { BUTTON_STATUS, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant'
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 import { Box, Button, Typography } from '@mui/material';
 import { Container } from '@mui/system';
+import PomodoroLengthMenu from '../PomodoroLengthMenu/PomodoroLengthMenu';
 
 const PomodoroTimer = () => {
-  const pomodoroLength = 25;
+  const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
   const [timer, setTimer] = React.useState(0);
   const [timerButton, setTimerButton] = React.useState(BUTTON_STATUS.START)
 
@@ -17,7 +18,7 @@ const PomodoroTimer = () => {
       id = setInterval(() => { setTimer(t => t + 1); }, 1000);
     }
 
-    if (timer >= (60 * pomodoroLength)) {
+    if (timer >= (60 * selectedPomdoroLength)) {
       resetTimer()
     }
 
@@ -55,10 +56,10 @@ const PomodoroTimer = () => {
     setTimerButton(BUTTON_STATUS.START);
   }
 
-  const time = timerButton === BUTTON_STATUS.START ? `${pomodoroLength} : 00` :
+  const time = timerButton === BUTTON_STATUS.START ? `${selectedPomdoroLength} : 00` :
     `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
   const progress = timerButton === BUTTON_STATUS.START ? 
-    100 : timer / (60 * pomodoroLength) * 100;
+    100 : timer / (60 * selectedPomdoroLength) * 100;
 
   const stopButton = timerButton === BUTTON_STATUS.CONTINUE ? (
     <Button variant="contained" onClick={resetTimer} sx={styles.buttonStyle}>
@@ -68,8 +69,12 @@ const PomodoroTimer = () => {
 
   return (
     <Container maxWidth="sm" sx={styles.container}>
-
-      <Typography variant="h4" sx={styles.title}>{'Pomodoro Timer'}</Typography>
+      <Box sx={styles.titleBox}>
+        <Typography variant="h4">{'Pomodoro Timer'}</Typography>
+        <PomodoroLengthMenu
+          setSelectedPomodoroLength={setSelectedPomodoroLength}
+        />
+      </Box>
 
       <Box sx={styles.flexCenter}>
         <CircularProgressWithLabel value={progress} />
