@@ -30,10 +30,9 @@ const PomodoroTimer = () => {
       <Box sx={styles.circleOutsideBox}>
         <CircularProgress variant="determinate" size={250} value={100}/>
         <Box sx={styles.circleInsideBox}>
-          <CircularProgress variant="determinate" size={250} color="success" {...props} />
+          <CircularProgress variant="determinate" size={250} color="success" {...props}/>
           <Box sx={styles.circleInsideBox}>
-            <Typography variant="h3">
-              {time}</Typography>
+            <Typography variant="h3">{time}</Typography>
           </Box>
         </Box>
       </Box>
