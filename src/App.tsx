@@ -1,7 +1,15 @@
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import PomodoroTimer from './PomodoroTimer/PomodoroTimer';
+import { theme } from './Utils/theme';
 
-function App() {
+const App = () => {
   return (
-    <div></div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+
+      <PomodoroTimer/>
+
+    </ThemeProvider>
   );
 }
 
