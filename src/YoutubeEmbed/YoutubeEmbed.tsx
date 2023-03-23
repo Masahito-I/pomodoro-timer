@@ -8,7 +8,7 @@ const YoutubeEmbed = (props:Props) => {
   const checkUrl = () => {
     const isYoutubeUrl = 
       youtubeUrl.includes('https://www.youtube.com/') || youtubeUrl.includes('https://youtu.be/');
-    if (!isYoutubeUrl) return ''
+    if (!isYoutubeUrl) return '';
 
     const pattern = /v=([\w-]+)/;
     const videoId = youtubeUrl.match(pattern);
