@@ -27,7 +27,7 @@ const YoutubeEmbed = (props:Props) => {
   return youtubeUrl === '' ?(
     <Box>
       <Typography variant="body1" sx={styles.flexCenter}>
-        {'Please input the youtube link to listen music.'}
+        {'Please input a youtube link to listen to music.'}
       </Typography>
     </Box>
   ) : (
