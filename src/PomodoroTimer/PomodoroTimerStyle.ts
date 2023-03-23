@@ -24,15 +24,38 @@ export const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
+  circleColor: {
+    color: '#5c9291'
+  },
   flexCenter: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    mb: 5,
+    mb: 4,
   },
   buttonStyle: {
     mx: 2,
     px: 4,
     py: 1,
+  },
+  youtubeBox: {
+    display:'flex',
+    alignItems:'center',
+    justifyContent: 'center',
+  },
+  youtubeButtonBox: {
+    flex: 1
+  },
+  youtubeTextField: {
+    flex: 2,
+    '& label': {
+      color: '#ccc'
+    },
+     '& .MuiInputBase-root': {
+      color: '#ccc',
+      '&:hover fieldset': {
+        borderColor: '#ccc',
+      },
+    },
   }
 }

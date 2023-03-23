@@ -9,9 +9,14 @@ export const POMODORO_LENGTH_MENU_ITEMS : POMODORO_LENGTH_MENU_ITEMS = {
   LENGTH_120: 120,
 };
 
-export const BUTTON_STATUS = {
+export const TIMER_BUTTON_STATUS = {
   START: 'Start', 
   PAUSE: 'Pause',
   CONTINUE: 'Continue',
   STOP: 'Stop',
 };
+
+export const YOUTUBE_BUTTON_NAME = {
+  DISPLAY: 'DISPLAY',
+  HIDE: 'HIDE',
+} 

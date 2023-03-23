@@ -1,25 +1,28 @@
 import * as React from 'react';
-import { styles } from './PomodoroTimerStyle'
-import { BUTTON_STATUS, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant'
+import { styles } from './PomodoroTimerStyle';
+import { TIMER_BUTTON_STATUS, YOUTUBE_BUTTON_NAME, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant'
 import PomodoroLengthMenu from '../PomodoroLengthMenu/PomodoroLengthMenu';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
+import YoutubeEmbed from '../YoutubeEmbed/YoutubeEmbed';
 
 const PomodoroTimer = () => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
   const [timer, setTimer] = React.useState(0);
-  const [timerButton, setTimerButton] = React.useState(BUTTON_STATUS.START)
+  const [timerButton, setTimerButton] = React.useState(TIMER_BUTTON_STATUS.START);
+  const [youtubeButton, setYoutubeButton] = React.useState(YOUTUBE_BUTTON_NAME.HIDE);
+  const [youtubeUrl, setYoutubeUrl] = React.useState('');
 
   React.useEffect(() => {
     let id: NodeJS.Timeout | undefined;
 
-    if (timerButton === BUTTON_STATUS.PAUSE) {
+    if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
       id = setInterval(() => { setTimer(t => t + 1); }, 1000);
     }
 
     if (timer >= (60 * selectedPomdoroLength)) {
-      resetTimer()
+      resetTimer();
     }
 
     return () => clearInterval(id);
@@ -30,7 +33,7 @@ const PomodoroTimer = () => {
       <Box sx={styles.circleOutsideBox}>
         <CircularProgress variant="determinate" size={250} value={100}/>
         <Box sx={styles.circleInsideBox}>
-          <CircularProgress variant="determinate" size={250} color="success" {...props}/>
+          <CircularProgress variant="determinate" size={250} {...props} style={styles.circleColor}/>
           <Box sx={styles.circleInsideBox}>
             <Typography variant="h3">{time}</Typography>
           </Box>
@@ -40,30 +43,45 @@ const PomodoroTimer = () => {
   }
 
   const changeTimerStatus = () => {
-    if (timerButton === BUTTON_STATUS.START) {
+    if (timerButton === TIMER_BUTTON_STATUS.START) {
       setTimer(0);
-      setTimerButton(BUTTON_STATUS.PAUSE);
-    } else if (timerButton === BUTTON_STATUS.PAUSE) {
-      setTimerButton(BUTTON_STATUS.CONTINUE);
-    } else if (timerButton === BUTTON_STATUS.CONTINUE) {
-      setTimerButton(BUTTON_STATUS.PAUSE);
+      setTimerButton(TIMER_BUTTON_STATUS.PAUSE);
+    } else if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
+      setTimerButton(TIMER_BUTTON_STATUS.CONTINUE);
+    } else if (timerButton === TIMER_BUTTON_STATUS.CONTINUE) {
+      setTimerButton(TIMER_BUTTON_STATUS.PAUSE);
     }
   }
 
   const resetTimer = () => {
     setTimer(0);
-    setTimerButton(BUTTON_STATUS.START);
+    setTimerButton(TIMER_BUTTON_STATUS.START);
   }
 
-  const time = timerButton === BUTTON_STATUS.START ? `${selectedPomdoroLength} : 00` :
+  const clickYoutubeButton = () => {
+    if (youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY) {
+      setYoutubeButton(YOUTUBE_BUTTON_NAME.HIDE);
+    } else {
+      setYoutubeButton(YOUTUBE_BUTTON_NAME.DISPLAY);
+    }
+  }
+
+  const time = timerButton === TIMER_BUTTON_STATUS.START ? `${selectedPomdoroLength} : 00` :
     `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
-  const progress = timerButton === BUTTON_STATUS.START ? 
+  const progress = timerButton === TIMER_BUTTON_STATUS.START ? 
     100 : timer / (60 * selectedPomdoroLength) * 100;
 
-  const stopButton = timerButton === BUTTON_STATUS.CONTINUE ? (
+  const displayStopButton = timerButton === TIMER_BUTTON_STATUS.CONTINUE ? (
     <Button variant="contained" onClick={resetTimer} sx={styles.buttonStyle}>
-      {BUTTON_STATUS.STOP}
+      {TIMER_BUTTON_STATUS.STOP}
     </Button>
+  ) : null
+
+  const displayTextField = youtubeButton === YOUTUBE_BUTTON_NAME.HIDE ? (
+    <TextField  value={youtubeUrl} label="URL" variant="outlined" size="small" 
+      onChange={e => {setYoutubeUrl(e.target.value)}}
+      sx={styles.youtubeTextField}
+    />
   ) : null
 
   return (
@@ -83,8 +101,18 @@ const PomodoroTimer = () => {
         <Button variant="contained" onClick={changeTimerStatus} sx={styles.buttonStyle}>
           {timerButton}
         </Button>
-        {stopButton}
+        {displayStopButton}
       </Box>
+
+      <Box sx={styles.youtubeBox}>
+        <Box sx={styles.youtubeButtonBox}>
+          <Button onClick={clickYoutubeButton} sx={styles.buttonStyle}>
+            {youtubeButton}
+          </Button>
+        </Box>
+        {displayTextField}
+      </Box>
+      <YoutubeEmbed youtubeButton={youtubeButton} youtubeUrl={youtubeUrl}/>
     </Container>
   )
 }
