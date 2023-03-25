@@ -6,6 +6,7 @@ import CircularProgress, { CircularProgressProps } from '@mui/material/CircularP
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import YoutubeEmbed from '../YoutubeEmbed/YoutubeEmbed';
+import alarmSound from '../Assets/alarm_sound.mp3';
 
 const PomodoroTimer = () => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
@@ -13,6 +14,7 @@ const PomodoroTimer = () => {
   const [timerButton, setTimerButton] = React.useState(TIMER_BUTTON_STATUS.START);
   const [youtubeButton, setYoutubeButton] = React.useState(YOUTUBE_BUTTON_NAME.HIDE);
   const [youtubeUrl, setYoutubeUrl] = React.useState('');
+  const alarm = new Audio(alarmSound);
 
   React.useEffect(() => {
     let id: NodeJS.Timeout | undefined;
@@ -54,6 +56,7 @@ const PomodoroTimer = () => {
   }
 
   const resetTimer = () => {
+    alarm.play();
     setTimer(0);
     setTimerButton(TIMER_BUTTON_STATUS.START);
   }

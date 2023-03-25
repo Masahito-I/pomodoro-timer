@@ -25,7 +25,7 @@ const YoutubeEmbed = (props:Props) => {
     styles.hideYoutubeElement : null;
 
   return youtubeUrl === '' ?(
-    <Box>
+    <Box sx={youttubeElementVisibility}>
       <Typography variant="body1" sx={styles.flexCenter}>
         {'Please input a youtube link to listen to music.'}
       </Typography>
