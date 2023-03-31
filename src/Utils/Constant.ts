@@ -19,4 +19,4 @@ export const TIMER_BUTTON_STATUS = {
 export const YOUTUBE_BUTTON_NAME = {
   DISPLAY: 'DISPLAY',
   HIDE: 'HIDE',
-} 
+};

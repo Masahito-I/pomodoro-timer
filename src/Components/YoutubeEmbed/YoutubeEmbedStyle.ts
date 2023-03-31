@@ -9,4 +9,4 @@ export const styles = {
   hideYoutubeElement: {
     visibility:'hidden',
   }
-}
+};
