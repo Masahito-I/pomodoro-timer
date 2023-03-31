@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant';
+import { POMODORO_LENGTH_MENU_ITEMS } from '../../Utils/Constant';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -21,15 +21,14 @@ const PomodoroLengthMenu = (props: Props) => {
   };
 
   const renderMenuItems = () => {
-    const rows = [];
-    for (const item in POMODORO_LENGTH_MENU_ITEMS ) {
-      rows.push(
-        <MenuItem onClick={() =>
-          handleClose(Number(POMODORO_LENGTH_MENU_ITEMS[item]))
-        }>{POMODORO_LENGTH_MENU_ITEMS[item]} mins</MenuItem>
-      )
-    }
-    return <tbody>{rows}</tbody>;
+    const menuItems = Object.keys(POMODORO_LENGTH_MENU_ITEMS).map((key) => (
+      <MenuItem key={key} onClick={() =>
+        handleClose(Number(POMODORO_LENGTH_MENU_ITEMS[key]))
+      }>
+        {POMODORO_LENGTH_MENU_ITEMS[key]} mins
+      </MenuItem>
+    ));
+    return menuItems;
   }
 
   return (

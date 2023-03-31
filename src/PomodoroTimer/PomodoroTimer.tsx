@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { styles } from './PomodoroTimerStyle';
-import { TIMER_BUTTON_STATUS, YOUTUBE_BUTTON_NAME, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant'
-import PomodoroLengthMenu from '../PomodoroLengthMenu/PomodoroLengthMenu';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import YoutubeEmbed from '../YoutubeEmbed/YoutubeEmbed';
+import { styles } from './PomodoroTimerStyle';
+import { TIMER_BUTTON_STATUS, YOUTUBE_BUTTON_NAME, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant';
+import PomodoroLengthMenu from '../Components/PomodoroLengthMenu/PomodoroLengthMenu';
+import YoutubeEmbed from '../Components/YoutubeEmbed/YoutubeEmbed';
 import alarmSound from '../Assets/alarm_sound.mp3';
 
 const PomodoroTimer = () => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
   const [timer, setTimer] = React.useState(0);
   const [timerButton, setTimerButton] = React.useState(TIMER_BUTTON_STATUS.START);
+  const [volumeOnOff, setVolumeOnOff] = React.useState(true);
   const [youtubeButton, setYoutubeButton] = React.useState(YOUTUBE_BUTTON_NAME.HIDE);
   const [youtubeUrl, setYoutubeUrl] = React.useState('');
   const alarm = new Audio(alarmSound);
@@ -56,10 +59,12 @@ const PomodoroTimer = () => {
   }
 
   const resetTimer = () => {
-    alarm.play();
+    if (volumeOnOff) alarm.play();
     setTimer(0);
     setTimerButton(TIMER_BUTTON_STATUS.START);
   }
+
+  const clickVolumeButton = () => setVolumeOnOff(!volumeOnOff);
 
   const clickYoutubeButton = () => {
     if (youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY) {
@@ -73,6 +78,8 @@ const PomodoroTimer = () => {
     `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
   const progress = timerButton === TIMER_BUTTON_STATUS.START ? 
     100 : timer / (60 * selectedPomdoroLength) * 100;
+
+  const volumeButton = volumeOnOff ? <VolumeUpIcon/> : <VolumeOffIcon/>;
 
   const displayStopButton = timerButton === TIMER_BUTTON_STATUS.CONTINUE ? (
     <Button variant="contained" onClick={resetTimer} sx={styles.buttonStyle}>
@@ -91,6 +98,7 @@ const PomodoroTimer = () => {
     <Container maxWidth="sm" sx={styles.container}>
       <Box sx={styles.titleBox}>
         <Typography variant="h4">{'Pomodoro Timer'}</Typography>
+        <Button size="small" onClick={clickVolumeButton}>{volumeButton}</Button>
         <PomodoroLengthMenu
           setSelectedPomodoroLength={setSelectedPomodoroLength}
         />
@@ -115,7 +123,7 @@ const PomodoroTimer = () => {
         </Box>
         {displayTextField}
       </Box>
-      <YoutubeEmbed youtubeButton={youtubeButton} youtubeUrl={youtubeUrl}/>
+      <YoutubeEmbed youtubeButton={youtubeButton} youtubeUrl={youtubeUrl} volumeOnOff={volumeOnOff}/>
     </Container>
   )
 }
