@@ -45,7 +45,7 @@ const PomodoroTimer = () => {
         </Box>
       </Box>
     );
-  }
+  };
 
   const changeTimerStatus = () => {
     if (timerButton === TIMER_BUTTON_STATUS.START) {
@@ -56,13 +56,13 @@ const PomodoroTimer = () => {
     } else if (timerButton === TIMER_BUTTON_STATUS.CONTINUE) {
       setTimerButton(TIMER_BUTTON_STATUS.PAUSE);
     }
-  }
+  };
 
   const resetTimer = () => {
     if (volumeOnOff) alarm.play();
     setTimer(0);
     setTimerButton(TIMER_BUTTON_STATUS.START);
-  }
+  };
 
   const clickVolumeButton = () => setVolumeOnOff(!volumeOnOff);
 
@@ -72,7 +72,7 @@ const PomodoroTimer = () => {
     } else {
       setYoutubeButton(YOUTUBE_BUTTON_NAME.DISPLAY);
     }
-  }
+  };
 
   const time = timerButton === TIMER_BUTTON_STATUS.START ? `${selectedPomdoroLength} : 00` :
     `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
@@ -85,14 +85,14 @@ const PomodoroTimer = () => {
     <Button variant="contained" onClick={resetTimer} sx={styles.buttonStyle}>
       {TIMER_BUTTON_STATUS.STOP}
     </Button>
-  ) : null
+  ) : null;
 
   const displayTextField = youtubeButton === YOUTUBE_BUTTON_NAME.HIDE ? (
     <TextField  value={youtubeUrl} label="URL" variant="outlined" size="small" 
-      onChange={e => {setYoutubeUrl(e.target.value)}}
+      onChange={e => {setYoutubeUrl(e.target.value);}}
       sx={styles.youtubeTextField}
     />
-  ) : null
+  ) : null;
 
   return (
     <Container maxWidth="sm" sx={styles.container}>
@@ -125,7 +125,7 @@ const PomodoroTimer = () => {
       </Box>
       <YoutubeEmbed youtubeButton={youtubeButton} youtubeUrl={youtubeUrl} volumeOnOff={volumeOnOff}/>
     </Container>
-  )
-}
+  );
+};
 
 export default PomodoroTimer;

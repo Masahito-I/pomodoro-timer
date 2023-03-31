@@ -17,7 +17,7 @@ const YoutubeEmbed = (props:Props) => {
     }else if(youtubeUrl.includes('https://youtu.be/')){
       return youtubeUrl.substring(youtubeUrl.lastIndexOf('/') + 1);
     }
-  }
+  };
 
   const muteSimbol = volumeOnOff ? '?autoplay=1' : '?autoplay=1&mute=1'; 
   const validateUrl = checkUrl() + muteSimbol;
@@ -41,7 +41,7 @@ const YoutubeEmbed = (props:Props) => {
       </Box>
     </Box>
   );
-}
+};
 
 type Props = {
   youtubeUrl: string;

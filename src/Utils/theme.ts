@@ -12,4 +12,4 @@ export const theme = createTheme({
       main: '#ccc',
     }
   },
-})
+});

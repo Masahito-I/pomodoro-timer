@@ -29,7 +29,7 @@ const PomodoroLengthMenu = (props: Props) => {
       </MenuItem>
     ));
     return menuItems;
-  }
+  };
 
   return (
     <>
@@ -61,7 +61,7 @@ const PomodoroLengthMenu = (props: Props) => {
       </Menu>
     </>
   );
-}
+};
 
 type Props = {
   setSelectedPomodoroLength: React.Dispatch<React.SetStateAction<number>>;
