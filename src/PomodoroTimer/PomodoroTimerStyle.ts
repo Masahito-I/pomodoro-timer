@@ -14,6 +14,9 @@ export const styles = {
     position: 'relative',
     display: 'inline-flex',
   },
+  circleOutsideButton: {
+    borderRadius: 30
+  },
   circleInsideBox: {
     top: 0,
     left: 0,

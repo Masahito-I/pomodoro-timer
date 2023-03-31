@@ -12,9 +12,10 @@ import alarmSound from '../Assets/alarm_sound.mp3';
 
 const PomodoroTimer = () => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
-  const [timer, setTimer] = React.useState(0);
+  const [timer, setTimer] = React.useState(60 * selectedPomdoroLength);
   const [timerButton, setTimerButton] = React.useState(TIMER_BUTTON_STATUS.START);
   const [volumeOnOff, setVolumeOnOff] = React.useState(true);
+  const [countUpDown, setCountUpDown] = React.useState(false);
   const [youtubeButton, setYoutubeButton] = React.useState(YOUTUBE_BUTTON_NAME.HIDE);
   const [youtubeUrl, setYoutubeUrl] = React.useState('');
   const alarm = new Audio(alarmSound);
@@ -23,10 +24,11 @@ const PomodoroTimer = () => {
     let id: NodeJS.Timeout | undefined;
 
     if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
-      id = setInterval(() => { setTimer(t => t + 1); }, 1000);
+      id = setInterval(() => { setTimer(t => countUpDown ? t + 1 : t - 1); }, 1000);
     }
 
-    if (timer >= (60 * selectedPomdoroLength)) {
+    if ((countUpDown && timer >= (60 * selectedPomdoroLength)) || 
+      (!countUpDown && timer < 0)) {
       resetTimer();
     }
 
@@ -49,7 +51,11 @@ const PomodoroTimer = () => {
 
   const changeTimerStatus = () => {
     if (timerButton === TIMER_BUTTON_STATUS.START) {
-      setTimer(0);
+      if(countUpDown) {
+        setTimer(0); 
+      } else {
+        setTimer(60 * selectedPomdoroLength);
+      }
       setTimerButton(TIMER_BUTTON_STATUS.PAUSE);
     } else if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
       setTimerButton(TIMER_BUTTON_STATUS.CONTINUE);
@@ -59,12 +65,25 @@ const PomodoroTimer = () => {
   };
 
   const resetTimer = () => {
-    if (volumeOnOff) alarm.play();
-    setTimer(0);
+    if (timerButton !== TIMER_BUTTON_STATUS.CONTINUE && volumeOnOff) alarm.play();
+    if(countUpDown) {
+      setTimer(0); 
+    } else {
+      setTimer(60 * selectedPomdoroLength);
+    }
     setTimerButton(TIMER_BUTTON_STATUS.START);
   };
 
   const clickVolumeButton = () => setVolumeOnOff(!volumeOnOff);
+
+  const clickCircularProgress = () => {
+    if(countUpDown) {
+      setTimer(Math.abs(timer - 60 * selectedPomdoroLength));
+    } else {
+      setTimer(60 * selectedPomdoroLength - timer);
+    }
+    setCountUpDown(!countUpDown);
+  };
 
   const clickYoutubeButton = () => {
     if (youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY) {
@@ -74,10 +93,8 @@ const PomodoroTimer = () => {
     }
   };
 
-  const time = timerButton === TIMER_BUTTON_STATUS.START ? `${selectedPomdoroLength} : 00` :
-    `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
-  const progress = timerButton === TIMER_BUTTON_STATUS.START ? 
-    100 : timer / (60 * selectedPomdoroLength) * 100;
+  const time = `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
+  const progress = timer / (60 * selectedPomdoroLength) * 100;
 
   const volumeButton = volumeOnOff ? <VolumeUpIcon/> : <VolumeOffIcon/>;
 
@@ -105,7 +122,9 @@ const PomodoroTimer = () => {
       </Box>
 
       <Box sx={styles.flexCenter}>
-        <CircularProgressWithLabel value={progress} />
+        <Button onClick={clickCircularProgress} sx={styles.circleOutsideButton}>
+          <CircularProgressWithLabel value={progress} />
+        </Button>
       </Box>
 
       <Box sx={styles.flexCenter}>
