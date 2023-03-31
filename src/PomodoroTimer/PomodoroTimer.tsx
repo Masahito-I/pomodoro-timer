@@ -97,11 +97,11 @@ const PomodoroTimer = () => {
   return (
     <Container maxWidth="sm" sx={styles.container}>
       <Box sx={styles.titleBox}>
-        <Typography variant="h4">{'Pomodoro Timer'}</Typography>
-        <Button size="small" onClick={clickVolumeButton}>{volumeButton}</Button>
-        <PomodoroLengthMenu
-          setSelectedPomodoroLength={setSelectedPomodoroLength}
-        />
+        <Typography variant="h5">{'Pomodoro Timer'}</Typography>
+        <Box>
+          <Button size="small" onClick={clickVolumeButton}>{volumeButton}</Button>
+          <PomodoroLengthMenu setSelectedPomodoroLength={setSelectedPomodoroLength}/>
+        </Box>
       </Box>
 
       <Box sx={styles.flexCenter}>
