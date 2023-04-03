@@ -7,8 +7,14 @@ export const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    mt:2,
+    mt: 2,
     mb: 5,
+  },
+  soundAndPomodoroLengthBox: {
+    '@media screen and (max-width:600px)': {
+      display: 'flex',
+      justifyContent: 'flex-end'
+    },
   },
   circleOutsideBox: {
     position: 'relative',

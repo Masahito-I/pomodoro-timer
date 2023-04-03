@@ -115,7 +115,7 @@ const PomodoroTimer = () => {
     <Container maxWidth='sm' sx={styles.container}>
       <Box sx={styles.titleBox}>
         <Typography variant='h5'>{'Pomodoro Timer'}</Typography>
-        <Box>
+        <Box sx={styles.soundAndPomodoroLengthBox}>
           <Button size='small' onClick={clickVolumeButton}>{volumeButton}</Button>
           <PomodoroLengthMenu setSelectedPomodoroLength={setSelectedPomodoroLength}/>
         </Box>
