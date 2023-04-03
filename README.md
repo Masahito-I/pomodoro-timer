@@ -1,5 +1,14 @@
 # Pomodoro Timer app
 
+## Features
+* A pomodoro timer with a circle progress.
+* A setting button for changing the pomodoro length.
+* An alarm sound to notify the end of the time.
+* A youtube function to watch or listen to music during focusing on your task.
+* A function to be able to change the count up or down of the circle progress bar.
+* A turn-off function for the situation when a user doesn’t want to hear.
+
+## How to run
 In the project directory, you can run:
 
 ### `npm start`
