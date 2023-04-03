@@ -38,11 +38,11 @@ const PomodoroTimer = () => {
   const CircularProgressWithLabel = ( props: CircularProgressProps & { value: number } ) => {
     return (
       <Box sx={styles.circleOutsideBox}>
-        <CircularProgress variant="determinate" size={250} value={100}/>
+        <CircularProgress variant='determinate' size={250} value={100}/>
         <Box sx={styles.circleInsideBox}>
-          <CircularProgress variant="determinate" size={250} {...props} style={styles.circleColor}/>
+          <CircularProgress variant='determinate' size={250} {...props} style={styles.circleColor}/>
           <Box sx={styles.circleInsideBox}>
-            <Typography variant="h3">{time}</Typography>
+            <Typography variant='h3'>{time}</Typography>
           </Box>
         </Box>
       </Box>
@@ -99,24 +99,24 @@ const PomodoroTimer = () => {
   const volumeButton = volumeOnOff ? <VolumeUpIcon/> : <VolumeOffIcon/>;
 
   const displayStopButton = timerButton === TIMER_BUTTON_STATUS.CONTINUE ? (
-    <Button variant="contained" onClick={resetTimer} sx={styles.buttonStyle}>
+    <Button variant='contained' onClick={resetTimer} sx={styles.buttonStyle}>
       {TIMER_BUTTON_STATUS.STOP}
     </Button>
   ) : null;
 
   const displayTextField = youtubeButton === YOUTUBE_BUTTON_NAME.HIDE ? (
-    <TextField  value={youtubeUrl} label="URL" variant="outlined" size="small" 
+    <TextField  value={youtubeUrl} label='URL' variant='outlined' size='small' 
       onChange={e => {setYoutubeUrl(e.target.value);}}
       sx={styles.youtubeTextField}
     />
   ) : null;
 
   return (
-    <Container maxWidth="sm" sx={styles.container}>
+    <Container maxWidth='sm' sx={styles.container}>
       <Box sx={styles.titleBox}>
-        <Typography variant="h5">{'Pomodoro Timer'}</Typography>
+        <Typography variant='h5'>{'Pomodoro Timer'}</Typography>
         <Box>
-          <Button size="small" onClick={clickVolumeButton}>{volumeButton}</Button>
+          <Button size='small' onClick={clickVolumeButton}>{volumeButton}</Button>
           <PomodoroLengthMenu setSelectedPomodoroLength={setSelectedPomodoroLength}/>
         </Box>
       </Box>
@@ -128,7 +128,7 @@ const PomodoroTimer = () => {
       </Box>
 
       <Box sx={styles.flexCenter}>
-        <Button variant="contained" onClick={changeTimerStatus} sx={styles.buttonStyle}>
+        <Button variant='contained' onClick={changeTimerStatus} sx={styles.buttonStyle}>
           {timerButton}
         </Button>
         {displayStopButton}

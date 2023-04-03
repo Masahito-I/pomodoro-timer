@@ -52,7 +52,7 @@ export const styles = {
   youtubeTextField: {
     flex: 2,
     '& label': {
-      color: '#ccc'
+      color: '#ccc',
     },
      '& .MuiInputBase-root': {
       color: '#ccc',

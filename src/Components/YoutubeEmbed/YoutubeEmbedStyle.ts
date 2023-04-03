@@ -7,6 +7,6 @@ export const styles = {
     justifyContent: 'center',
   },
   hideYoutubeElement: {
-    visibility:'hidden',
+    visibility: 'hidden',
   }
 };
