@@ -50,12 +50,8 @@ const PomodoroTimer = () => {
   };
 
   const changeTimerStatus = () => {
-    if (timerButton === TIMER_BUTTON_STATUS.START) {
-      if(countUpDown) {
-        setTimer(0); 
-      } else {
-        setTimer(60 * selectedPomdoroLength);
-      }
+    if (timerButton === TIMER_BUTTON_STATUS.START) {   
+      setTimer(countUpDown ? 0 : 60 * selectedPomdoroLength);
       setTimerButton(TIMER_BUTTON_STATUS.PAUSE);
     } else if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
       setTimerButton(TIMER_BUTTON_STATUS.CONTINUE);
@@ -66,34 +62,35 @@ const PomodoroTimer = () => {
 
   const resetTimer = () => {
     if (timerButton !== TIMER_BUTTON_STATUS.CONTINUE && volumeOnOff) alarm.play();
-    if(countUpDown) {
-      setTimer(0); 
-    } else {
-      setTimer(60 * selectedPomdoroLength);
-    }
+    setTimer(countUpDown ? 0 : 60 * selectedPomdoroLength);
+    setTimerButton(TIMER_BUTTON_STATUS.START);
+  };
+
+  const clickPomodoroLength = (pomodoroLength: number) => {
+    setTimer(countUpDown ? 0 : 60 * pomodoroLength);
+    setSelectedPomodoroLength(pomodoroLength);
     setTimerButton(TIMER_BUTTON_STATUS.START);
   };
 
   const clickVolumeButton = () => setVolumeOnOff(!volumeOnOff);
 
   const clickCircularProgress = () => {
-    if(countUpDown) {
-      setTimer(Math.abs(timer - 60 * selectedPomdoroLength));
-    } else {
-      setTimer(60 * selectedPomdoroLength - timer);
-    }
+    setTimer(countUpDown ? 
+      Math.abs(timer - 60 * selectedPomdoroLength) :
+      60 * selectedPomdoroLength - timer
+    );
     setCountUpDown(!countUpDown);
   };
 
   const clickYoutubeButton = () => {
-    if (youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY) {
-      setYoutubeButton(YOUTUBE_BUTTON_NAME.HIDE);
-    } else {
-      setYoutubeButton(YOUTUBE_BUTTON_NAME.DISPLAY);
-    }
+    setYoutubeButton(youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY ?
+      YOUTUBE_BUTTON_NAME.HIDE : YOUTUBE_BUTTON_NAME.DISPLAY
+    );
   };
 
-  const time = `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}`;
+  const time = selectedPomdoroLength < 60 ?
+    `${('00'+Math.floor(timer/60)).slice(-2)} : ${('00'+timer%60).slice(-2)}` :
+    `${('000'+Math.floor(timer/60)).slice(-3)} : ${('00'+timer%60).slice(-2)}`;
   const progress = timer / (60 * selectedPomdoroLength) * 100;
 
   const volumeButton = volumeOnOff ? <VolumeUpIcon/> : <VolumeOffIcon/>;
@@ -117,7 +114,7 @@ const PomodoroTimer = () => {
         <Typography variant='h5'>{'Pomodoro Timer'}</Typography>
         <Box sx={styles.soundAndPomodoroLengthBox}>
           <Button size='small' onClick={clickVolumeButton}>{volumeButton}</Button>
-          <PomodoroLengthMenu setSelectedPomodoroLength={setSelectedPomodoroLength}/>
+          <PomodoroLengthMenu clickPomodoroLength={clickPomodoroLength} />
         </Box>
       </Box>
 

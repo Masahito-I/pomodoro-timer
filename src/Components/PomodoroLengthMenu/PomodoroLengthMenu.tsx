@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 const PomodoroLengthMenu = (props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { setSelectedPomodoroLength } = props;
+  const { clickPomodoroLength } = props;
   
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -16,7 +16,7 @@ const PomodoroLengthMenu = (props: Props) => {
   const handleClose = (item: number) => {
     setAnchorEl(null);
     if (typeof item === 'number') {
-      setSelectedPomodoroLength(item);
+      clickPomodoroLength(item);
     }
   };
 
@@ -64,7 +64,7 @@ const PomodoroLengthMenu = (props: Props) => {
 };
 
 type Props = {
-  setSelectedPomodoroLength: React.Dispatch<React.SetStateAction<number>>;
+  clickPomodoroLength: (pomodoroLength: number) => void;
 }
 
 export default PomodoroLengthMenu;
