@@ -63,12 +63,10 @@ const PomodoroTimer = () => {
 
   const resetTimer = () => {
     if (timerButton !== TIMER_BUTTON_STATUS.CONTINUE && volumeOnOff) alarm.play();
-    setTimer(countUpDown ? 0 : 60 * selectedPomdoroLength);
-    setTimerButton(TIMER_BUTTON_STATUS.START);
-    document.title = 'Pomodoro Timer';
+    updatePomodoroLength(selectedPomdoroLength);
   };
 
-  const clickPomodoroLength = (pomodoroLength: number) => {
+  const updatePomodoroLength = (pomodoroLength: number) => {
     setTimer(countUpDown ? 0 : 60 * pomodoroLength);
     setSelectedPomodoroLength(pomodoroLength);
     setTimerButton(TIMER_BUTTON_STATUS.START);
@@ -117,7 +115,7 @@ const PomodoroTimer = () => {
         <Typography variant='h5'>{'Pomodoro Timer'}</Typography>
         <Box sx={styles.soundAndPomodoroLengthBox}>
           <Button size='small' onClick={clickVolumeButton}>{volumeButton}</Button>
-          <PomodoroLengthMenu clickPomodoroLength={clickPomodoroLength} />
+          <PomodoroLengthMenu updatePomodoroLength={updatePomodoroLength} />
         </Box>
       </Box>
 
