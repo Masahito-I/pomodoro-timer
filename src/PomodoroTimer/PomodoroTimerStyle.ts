@@ -13,7 +13,7 @@ export const styles = {
   soundAndPomodoroLengthBox: {
     '@media screen and (max-width:600px)': {
       display: 'flex',
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
     },
   },
   circleOutsideBox: {
@@ -34,7 +34,7 @@ export const styles = {
     justifyContent: 'center',
   },
   circleColor: {
-    color: '#5c9291'
+    color: '#5c9291',
   },
   flexCenter: {
     display: 'flex',
@@ -53,7 +53,7 @@ export const styles = {
     justifyContent: 'center',
   },
   youtubeButtonBox: {
-    flex: 1
+    flex: 1,
   },
   youtubeTextField: {
     flex: 2,

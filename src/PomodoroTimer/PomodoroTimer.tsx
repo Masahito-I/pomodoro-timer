@@ -24,6 +24,7 @@ const PomodoroTimer = () => {
     let id: NodeJS.Timeout | undefined;
 
     if (timerButton === TIMER_BUTTON_STATUS.PAUSE) {
+      document.title = 'Pomodoro Timer - ' + time;
       id = setInterval(() => { setTimer(t => countUpDown ? t + 1 : t - 1); }, 1000);
     }
 
@@ -64,12 +65,14 @@ const PomodoroTimer = () => {
     if (timerButton !== TIMER_BUTTON_STATUS.CONTINUE && volumeOnOff) alarm.play();
     setTimer(countUpDown ? 0 : 60 * selectedPomdoroLength);
     setTimerButton(TIMER_BUTTON_STATUS.START);
+    document.title = 'Pomodoro Timer';
   };
 
   const clickPomodoroLength = (pomodoroLength: number) => {
     setTimer(countUpDown ? 0 : 60 * pomodoroLength);
     setSelectedPomodoroLength(pomodoroLength);
     setTimerButton(TIMER_BUTTON_STATUS.START);
+    document.title = 'Pomodoro Timer';
   };
 
   const clickVolumeButton = () => setVolumeOnOff(!volumeOnOff);
