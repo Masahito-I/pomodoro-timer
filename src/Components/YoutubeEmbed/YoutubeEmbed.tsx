@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { styles } from './YoutubeEmbedStyle';
-import { YOUTUBE_BUTTON_NAME } from '../../Utils/Constant';
+import { SETTING_BUTTON_NAME } from '../../Utils/Constant';
 
-const YoutubeEmbed = (props:Props) => {
-  const { youtubeUrl, youtubeButton, volumeOnOff } = props;
+const YoutubeEmbed = (props: Props) => {
+  const { youtubeUrl, settingButton, volumeOnOff } = props;
 
   const checkUrl = () => {
     const isYoutubeUrl = 
@@ -22,7 +22,7 @@ const YoutubeEmbed = (props:Props) => {
   const muteSimbol = volumeOnOff ? '?autoplay=1' : '?autoplay=1&mute=1'; 
   const validateUrl = checkUrl() + muteSimbol;
 
-  const youttubeElementVisibility = youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY ?
+  const youttubeElementVisibility = settingButton === SETTING_BUTTON_NAME.DISPLAY ?
     styles.hideYoutubeElement : null;
 
   return youtubeUrl === '' ? (
@@ -45,7 +45,7 @@ const YoutubeEmbed = (props:Props) => {
 
 type Props = {
   youtubeUrl: string;
-  youtubeButton: string;
+  settingButton: string;
   volumeOnOff: boolean;
 }
 

@@ -47,10 +47,14 @@ export const styles = {
     px: 4,
     py: 1,
   },
-  youtubeBox: {
-    display:'flex',
-    alignItems:'center',
-    justifyContent: 'center',
+  youtubeElementBox: {
+    m: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  youtubeLabel: {
+    mx: 4,
   },
   youtubeButtonBox: {
     flex: 1,
@@ -66,5 +70,21 @@ export const styles = {
         borderColor: '#ccc',
       },
     },
+  },
+  backgroundColorElement: {
+    my: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  backgroundEffectElement: {
+    m: 2,
+    mx: 6,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  flexGrow: {
+    flexGrow: 1,
   }
 };
