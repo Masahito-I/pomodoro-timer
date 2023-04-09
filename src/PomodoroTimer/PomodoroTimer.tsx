@@ -2,23 +2,26 @@ import * as React from 'react';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, Radio, RadioGroup, Switch, TextField, Theme, Typography, createTheme } from '@mui/material';
 import { Container } from '@mui/system';
 import { styles } from './PomodoroTimerStyle';
-import { TIMER_BUTTON_STATUS, YOUTUBE_BUTTON_NAME, POMODORO_LENGTH_MENU_ITEMS } from '../Utils/Constant';
+import { TIMER_BUTTON_STATUS, SETTING_BUTTON_NAME, POMODORO_LENGTH_MENU_ITEMS, BACKGROUND_COLOR } from '../Utils/Constant';
 import PomodoroLengthMenu from '../Components/PomodoroLengthMenu/PomodoroLengthMenu';
 import YoutubeEmbed from '../Components/YoutubeEmbed/YoutubeEmbed';
 import alarmSound from '../Assets/alarm_sound.mp3';
 
-const PomodoroTimer = () => {
+const PomodoroTimer = (props: Props) => {
   const [selectedPomdoroLength, setSelectedPomodoroLength] = React.useState(POMODORO_LENGTH_MENU_ITEMS.LENGTH_25);
   const [timer, setTimer] = React.useState(60 * selectedPomdoroLength);
   const [timerButton, setTimerButton] = React.useState(TIMER_BUTTON_STATUS.START);
   const [volumeOnOff, setVolumeOnOff] = React.useState(true);
   const [countUpDown, setCountUpDown] = React.useState(false);
-  const [youtubeButton, setYoutubeButton] = React.useState(YOUTUBE_BUTTON_NAME.HIDE);
+  const [settingButton, setSettingButton] = React.useState(SETTING_BUTTON_NAME.HIDE);
   const [youtubeUrl, setYoutubeUrl] = React.useState('');
   const alarm = new Audio(alarmSound);
+  const [backgroundColor, setBackgroundColor] = React.useState(BACKGROUND_COLOR.GRAY);
+  const { setThemeState } = props;
+  const [backgroundEffect, setBackgroundEffect] = React.useState(false);
 
   React.useEffect(() => {
     let id: NodeJS.Timeout | undefined;
@@ -83,10 +86,30 @@ const PomodoroTimer = () => {
     setCountUpDown(!countUpDown);
   };
 
-  const clickYoutubeButton = () => {
-    setYoutubeButton(youtubeButton === YOUTUBE_BUTTON_NAME.DISPLAY ?
-      YOUTUBE_BUTTON_NAME.HIDE : YOUTUBE_BUTTON_NAME.DISPLAY
+  const clickSettingButton = () => {
+    setSettingButton(settingButton === SETTING_BUTTON_NAME.DISPLAY ?
+      SETTING_BUTTON_NAME.HIDE : SETTING_BUTTON_NAME.DISPLAY
     );
+  };
+
+  const clickBackgroundColorButton = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const color = (event.target as HTMLInputElement).value;
+    setThemeState(
+      createTheme({
+        palette: {
+          background: {
+            default: color,
+          },
+          primary: {
+            main: '#ccc',
+          },
+          secondary: {
+            main: '#ccc',
+          }
+        },
+      })
+    );
+    setBackgroundColor(color);
   };
 
   const time = selectedPomdoroLength < 60 ?
@@ -102,11 +125,70 @@ const PomodoroTimer = () => {
     </Button>
   ) : null;
 
-  const displayTextField = youtubeButton === YOUTUBE_BUTTON_NAME.HIDE ? (
-    <TextField  value={youtubeUrl} label='URL' variant='outlined' size='small' 
-      onChange={e => {setYoutubeUrl(e.target.value);}}
-      sx={styles.youtubeTextField}
-    />
+  const displaySettingElement = () => {
+    const displayYoutubeElement = settingButton === SETTING_BUTTON_NAME.HIDE ? (
+      <Box sx={styles.youtubeElementBox}>
+        <Typography variant='body1' sx={styles.youtubeLabel}>{'Youtube'}</Typography>
+        <TextField  value={youtubeUrl} label='URL' variant='outlined' size='small' 
+          onChange={e => {setYoutubeUrl(e.target.value);}}
+          sx={styles.youtubeTextField}
+        />
+      </Box>
+    ) : null;
+
+    const displayBackgroundColorElement =  settingButton === SETTING_BUTTON_NAME.HIDE ? (
+      <Box sx={styles.backgroundColorElement}>
+        <Typography variant='body1'>{'Background color'}</Typography>
+        <FormControl>
+          <RadioGroup
+            row
+            aria-labelledby='demo-row-radio-buttons-group-label'
+            name='row-radio-buttons-group'
+            value={backgroundColor}
+            onChange={clickBackgroundColorButton}
+          >
+            <FormControlLabel value={BACKGROUND_COLOR.GRAY} control={<Radio />} label='' sx={{backgroundColor: BACKGROUND_COLOR.GRAY, borderRadius: '90%', opacity: 0.7}}/>
+            <FormControlLabel value={BACKGROUND_COLOR.PURPLE} control={<Radio />} label='' sx={{backgroundColor: BACKGROUND_COLOR.PURPLE, borderRadius: '90%', opacity: 0.7}}/>
+            <FormControlLabel value={BACKGROUND_COLOR.ORANGE} control={<Radio />} label='' sx={{backgroundColor: BACKGROUND_COLOR.ORANGE, borderRadius: '90%', opacity: 0.7}}/>
+            <FormControlLabel value={BACKGROUND_COLOR.GREEN} control={<Radio />} label='' sx={{backgroundColor: BACKGROUND_COLOR.GREEN, borderRadius: '90%', opacity: 0.7}}/>
+            <FormControlLabel value={BACKGROUND_COLOR.PINK} control={<Radio />} label='' sx={{backgroundColor: BACKGROUND_COLOR.PINK, borderRadius: '90%', opacity: 0.7}}/>
+          </RadioGroup>
+        </FormControl>
+      </Box>
+    ) : null;
+
+    const displayBackgroundEffectElement = settingButton === SETTING_BUTTON_NAME.HIDE ? (
+      <Box sx={styles.backgroundEffectElement}>
+        <Typography sx={styles.flexGrow} variant='body1'>{'Background effect'}</Typography>
+        <Box sx={styles.flexGrow}>
+          <Switch checked={backgroundEffect} onChange={(event) => setBackgroundEffect(event.target.checked)} />
+        </Box>
+      </Box>
+    ) : null;
+
+    return (
+      <>
+        {displayYoutubeElement}
+        <YoutubeEmbed settingButton={settingButton} youtubeUrl={youtubeUrl} volumeOnOff={volumeOnOff}/>
+        {displayBackgroundColorElement}
+        {displayBackgroundEffectElement}
+      </>
+    );
+  };
+
+  const displayCircleEffect = backgroundEffect ? (
+    <ul className='circles'>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
   ) : null;
 
   return (
@@ -132,17 +214,18 @@ const PomodoroTimer = () => {
         {displayStopButton}
       </Box>
 
-      <Box sx={styles.youtubeBox}>
-        <Box sx={styles.youtubeButtonBox}>
-          <Button onClick={clickYoutubeButton} sx={styles.buttonStyle}>
-            {youtubeButton}
-          </Button>
-        </Box>
-        {displayTextField}
-      </Box>
-      <YoutubeEmbed youtubeButton={youtubeButton} youtubeUrl={youtubeUrl} volumeOnOff={volumeOnOff}/>
+      <Button onClick={clickSettingButton} sx={styles.buttonStyle}>
+        {settingButton}
+      </Button>
+      {displaySettingElement()}
+
+      {displayCircleEffect}
     </Container>
   );
 };
+
+type Props = {
+  setThemeState: React.Dispatch<React.SetStateAction<Theme>>;
+}
 
 export default PomodoroTimer;

@@ -17,7 +17,15 @@ export const TIMER_BUTTON_STATUS = {
   STOP: 'Stop',
 };
 
-export const YOUTUBE_BUTTON_NAME = {
-  DISPLAY: 'DISPLAY',
+export const SETTING_BUTTON_NAME = {
+  DISPLAY: 'SETTING',
   HIDE: 'HIDE',
+};
+
+export const BACKGROUND_COLOR = {
+  GRAY: '#2e2d30',
+  PURPLE: '#6778AE',
+  ORANGE: '#ff8c1a',
+  GREEN: '#408000',
+  PINK: '#ff99cc',
 };
